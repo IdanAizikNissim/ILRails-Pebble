@@ -1,4 +1,6 @@
 var API = require('api');
+var Stations = require('stations');
+var Lang = require('language');
 
 // Routes list
 // data: api.getRoutes(...).Data.Routes
@@ -33,6 +35,69 @@ var getRoutesList = function (data) {
   return items;
 };
 
+var getStationsList = function (stations, lang) {
+  var items = [];
+  
+  stations.forEach(function(station) {
+    items.push({
+      title: station[lang][0],
+      icon: "images/" + (!Stations.inFav(station.Id) ? "star_empty.png" : "star_full.png"),
+      station: station.Id
+    });
+  });
+  
+  return items;
+};
+
+var getSavedRoutesList = function(lang) {
+  var items = [];
+  
+  Stations.getRoutes(lang).forEach(function(route) {
+    items.push({
+      title: route.tName,
+      subtitle: route.oName,
+      oId: route.oId,
+      tId: route.tId
+    });
+  });
+  
+  return items;
+};
+
+var getFavStationsList = function(lang) {
+  var items = [];
+  
+  Stations.getFavStations(lang).forEach(function(station) {
+    items.push({
+      title: station.name,
+      id: station.id,
+    });
+  });
+  
+  return items;
+};
+
+var getLangsList = function() {
+  var items = [];
+  var langs = Lang.getLangs();
+  
+  for (var key in langs) {
+    var lang = langs[key];
+    var item = {
+      title: lang.english,
+      subtitle: lang.name,
+      acronym: lang.acronym
+    };
+    
+    if (Lang.isDefLang(lang.acronym)) {
+      item.icon = 'images/tick.png';
+    }
+    
+    items.push(item); 
+  }
+  
+  return items;
+};
 
 // MARK: UI Helpers
 
@@ -51,5 +116,9 @@ var stringToDate = function (date) {
 
 // EXPORT
 module.exports = {
-  getRoutesList: getRoutesList
+  getRoutesList: getRoutesList,
+  getStationsList: getStationsList,
+  getLangsList: getLangsList,
+  getSavedRoutesList: getSavedRoutesList,
+  getFavStationsList: getFavStationsList
 };

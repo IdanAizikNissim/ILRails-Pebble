@@ -30,6 +30,21 @@
                 "type": "font"
             },
             {
+                "file": "images/tick.png",
+                "name": "IMAGES_TICK_PNG",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/star_empty.png",
+                "name": "IMAGES_STAR_EMPTY_PNG",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/star_full.png",
+                "name": "IMAGES_STAR_FULL_PNG",
+                "type": "bitmap"
+            },
+            {
                 "file": "images/train.png",
                 "name": "IMAGES_TRAIN_PNG",
                 "type": "bitmap"
