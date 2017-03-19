@@ -24,8 +24,8 @@ var getRoutesList = function (data) {
     // Set title and subtitle
     item.title = formatUITime(stringToDate(depTime)) + ' - ' +
         formatUITime(stringToDate(arvTime));
-    item.subtitle = 'Platform ' + route.Train[0].Platform + 
-      ', No. ' + route.Train[0].Trainno;
+    item.subtitle = Lang.word('platform') + ' ' + route.Train[0].Platform + 
+      ', ' + Lang.word('num') + ' ' + route.Train[0].Trainno;
     
     item.route = route;
     

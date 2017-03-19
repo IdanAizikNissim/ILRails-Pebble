@@ -29,6 +29,18 @@ var openRoutesScreen = function(oId, tId, date) {
   });
 };
 
+var openMenuScreen = function(items) {
+  var menu = new UI.Menu({ 
+    sections: [{
+      items: items
+    }]
+  });
+  
+  menu.show(); 
+  
+  return menu;
+};
+
 var favStationScreen = function(callback) {
   var lang = Lang.getDefLang();
   var menu = openMenuScreen(APPUI.getFavStationsList(lang));
@@ -38,23 +50,35 @@ var favStationScreen = function(callback) {
   });
 };
 
-var addRouteScreen = function(callback) {
+var addRouteScreen = function(edit, data, callback) {
   var lang = Lang.getDefLang();
-  var menu = openMenuScreen([
+  
+  var items = [
     {
-      title: 'Origin',
-      subtitle: 'select origin station'
+      title: Lang.word('origin'),
+      subtitle: Lang.word('select_org_station')
     },
     {
-      title: 'Destination',
-      subtitle: 'select destination station'
+      title: Lang.word('destination'),
+      subtitle: Lang.word('select_dest_station')
     },
     {
-      title: 'Save'
+      title: Lang.word('save')
     }
-  ]);
+  ];
   
   var route = {};
+  
+  if (edit) {
+    items.push({title: Lang.word('delete')});
+    route.oId = data.oId;
+    route.tId = data.tId;
+    items[0].subtitle = data.oName;
+    items[1].subtitle = data.tName;
+  }
+  
+  var menu = openMenuScreen(items);
+  
   menu.on('select', function(e) {
     if (e.itemIndex === 0) {
       // Origin
@@ -68,13 +92,22 @@ var addRouteScreen = function(callback) {
         route.tId = id;
         e.item.subtitle = Stations.getStationNameById(id, lang);
       });
-    } else {
+    } else if (e.itemIndex === 2) {
       // Save
-      if (route.oId && route.tId) {
+      if (route.oId && route.tId && route.oId != route.tId) {
+        if (edit) {
+          Stations.removeRoute(data.oId, data.tId);
+        }
+        
         Stations.addRoute(route.oId, route.tId);
         callback();
         menu.hide();
       }
+    } else {
+      // Delete
+      Stations.removeRoute(data.oId, data.tId);
+      callback();
+      menu.hide();
     }
   });
 };
@@ -82,7 +115,7 @@ var addRouteScreen = function(callback) {
 var manageRoutesScreen = function() {
   var menu = new UI.Menu({ sections: [
     {items: [{
-      title: 'Add Route'
+      title: Lang.word('add_route')
     }]},
     {items: APPUI.getSavedRoutesList(Lang.getDefLang())}
   ] });
@@ -90,7 +123,7 @@ var manageRoutesScreen = function() {
   menu.on('select', function(e) {
     if (e.sectionIndex === 0) {
       // Add route
-      addRouteScreen(function() {
+      addRouteScreen(false, null, function() {
         menu.hide();
         menu.show();
       });
@@ -98,21 +131,18 @@ var manageRoutesScreen = function() {
       // Open routes
       openRoutesScreen(e.item.oId, e.item.tId, new Date());
     }
+    
+    menu.on('longSelect', function(e) {
+      if (e.sectionIndex === 1) {
+        addRouteScreen(true, {oId: e.item.oId, tId: e.item.tId, oName: e.item.subtitle, tName: e.item.title}, function() {
+          menu.hide();
+          menu.show();
+        });
+      }
+    });
   });
   
   menu.show();
-};
-
-var openMenuScreen = function(items) {
-  var menu = new UI.Menu({ 
-    sections: [{
-      items: items
-    }]
-  });
-  
-  menu.show(); 
-  
-  return menu;
 };
 
 var openStationsScreen = function() {
@@ -139,14 +169,14 @@ var openLangsScreen = function() {
 var openDownMenuScreen = function() {
   var menu = openMenuScreen([
     {
-      title: 'Routes'
+      title: Lang.word('routes')
     },
     {
-      title: 'Stations'
+      title: Lang.word('stations')
     },
     {
-      title: 'Language',
-      subtitle: 'select default language'
+      title: Lang.word('language'),
+      subtitle: Lang.word('select_def_lang') 
     }
   ]);
   
