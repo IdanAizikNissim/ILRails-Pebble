@@ -30,6 +30,16 @@
                 "type": "font"
             },
             {
+                "file": "images/route.png",
+                "name": "IMAGES_ROUTE_PNG",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/lang.png",
+                "name": "IMAGES_LANG_PNG",
+                "type": "bitmap"
+            },
+            {
                 "file": "images/tick.png",
                 "name": "IMAGES_TICK_PNG",
                 "type": "bitmap"

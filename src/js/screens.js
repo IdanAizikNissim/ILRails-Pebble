@@ -4,6 +4,10 @@ var APPUI = require('appui');
 var Stations = require('stations');
 var Lang = require('language');
 
+var openRouteDetailsScreen = function(route) {
+  new UI.Menu({ sections: APPUI.routeDetailsList(route, Lang.getDefLang()) }).show();
+};
+
 var openRoutesScreen = function(oId, tId, date) {
   API.getRoutes(oId, tId, date, function (err, data) {
     if (err) {
@@ -20,8 +24,12 @@ var openRoutesScreen = function(oId, tId, date) {
       ] });
     
       menu.on('select', function(e) {
-        //console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
-        console.log(e.item.route);
+        if (e.sectionIndex === 0) {
+          // Change time
+        } else {
+          // Show route detail
+          openRouteDetailsScreen(e.item.route);
+        }
       });
     
       menu.show(); 
@@ -169,14 +177,17 @@ var openLangsScreen = function() {
 var openDownMenuScreen = function() {
   var menu = openMenuScreen([
     {
-      title: Lang.word('routes')
+      title: Lang.word('routes'),
+      icon: 'images/route.png'
     },
     {
-      title: Lang.word('stations')
+      title: Lang.word('stations'),
+      icon: 'images/train.png'
     },
     {
       title: Lang.word('language'),
-      subtitle: Lang.word('select_def_lang') 
+      subtitle: Lang.word('select_def_lang'),
+      icon: 'images/lang.png'
     }
   ]);
   

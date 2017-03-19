@@ -35,6 +35,31 @@ var getRoutesList = function (data) {
   return items;
 };
 
+var routeDetailsList = function (route, lang) {
+    var section = [];
+    route.Train.forEach(function(train) {
+      section.push({
+        items: [{
+          title: Stations.getStationNameById(train.DestinationStation, lang),
+          subtitle: Stations.getStationNameById(train.OrignStation, lang),
+          icon: 'images/train.png'
+        }]
+      });
+      
+      var items = [];
+      train.StopStations.forEach(function(stop) {
+        items.push({
+          title: Stations.getStationNameById(stop.StationId, lang),
+          subtitle: formatUITime(stringToDate(stop.ArrivalTime)) + ', ' + Lang.word('platform') + ' ' + stop.Platform
+        });
+      });
+      
+      section.push({items: items});
+    });
+  
+  return section;
+};
+
 var getStationsList = function (stations, lang) {
   var items = [];
   
@@ -120,5 +145,6 @@ module.exports = {
   getStationsList: getStationsList,
   getLangsList: getLangsList,
   getSavedRoutesList: getSavedRoutesList,
-  getFavStationsList: getFavStationsList
+  getFavStationsList: getFavStationsList,
+  routeDetailsList: routeDetailsList
 };
