@@ -1,0 +1,79 @@
+{
+    "name": "RailsIL",
+    "author": "Idan Aizik Nissim",
+    "version": "0.0.0",
+    "keywords": [
+        "Rails-IL"
+    ],
+    "private": true,
+    "dependencies": {
+        "pebble-clay": "^1.0.4",
+        "pebble-timeline-js": "^2.0.1",
+        "pebblejs": "^1.0.0"
+    },
+    "pebble": {
+        "displayName": "RailsIL",
+        "uuid": "5b429bd6-0946-4182-9395-76fd802fb892",
+        "sdkVersion": "3",
+        "enableMultiJS": true,
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite"
+        ],
+        "watchapp": {
+            "watchface": false
+        },
+        "resources": {
+            "media": [
+                {
+                    "file": "images/route.png",
+                    "name": "IMAGES_ROUTE_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/lang.png",
+                    "name": "IMAGES_LANG_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/tick.png",
+                    "name": "IMAGES_TICK_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/star_empty.png",
+                    "name": "IMAGES_STAR_EMPTY_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/star_full.png",
+                    "name": "IMAGES_STAR_FULL_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/train.png",
+                    "name": "IMAGES_TRAIN_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/direct.png",
+                    "name": "IMAGES_DIRECT_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/exchange.png",
+                    "name": "IMAGES_EXCHANGE_PNG",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/ilrails-logo.png",
+                    "menuIcon": true,
+                    "name": "IMAGES_ILRAILS_LOGO_PNG",
+                    "type": "bitmap"
+                }
+            ]
+        }
+    }
+}
